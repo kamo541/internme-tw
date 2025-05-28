@@ -1,0 +1,34 @@
+console.log('InternMe script loaded');
+
+// Firebase placeholder config
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase (after you've added Firebase SDK)
+// firebase.initializeApp(firebaseConfig);
+
+// Example: Login with localStorage (fallback if Firebase not yet used)
+function login() {
+  const email = prompt("Enter your email:");
+  const name = prompt("Enter your name:");
+  if (email && name) {
+    localStorage.setItem("internmeUser", JSON.stringify({ name, email }));
+    document.getElementById('app-content').innerHTML = `<p>Welcome, ${name}!</p>`;
+  }
+}
+
+// Call login on page load if no user
+window.onload = () => {
+  const user = JSON.parse(localStorage.getItem("internmeUser"));
+  if (user) {
+    document.getElementById('app-content').innerHTML = `<p>Welcome back, ${user.name}!</p>`;
+  } else {
+    login();
+  }
+};
