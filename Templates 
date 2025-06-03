@@ -1,218 +1,30 @@
-
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
-
-app = Flask(__name__)
-app.secret_key = 'internme_secret_key'
-
-# Full Course → Work Sectors (including tertiary for Education)
-course_sectors = {
-    "African Languages": ["Translation", "Cultural Heritage", "Linguistics"],
-    "English": ["Literary Studies", "Creative Writing", "Publishing"],
-    "Afrikaans": ["Translation", "Language Studies", "Education"],
-    ...
-    "Human Settlements Management": ["Housing Development", "Urban Development", "Public Administration"]
-}
-
-province_towns = {
-    "Gauteng": ["Johannesburg","Pretoria","Soweto","Benoni","Boksburg","Vereeniging","Krugersdorp","Centurion","Midrand"],
-    "Western Cape": ["Cape Town","Stellenbosch","Paarl","George","Knysna","Mossel Bay","Worcester"],
-    ...
-    "Northern Cape": ["Kimberley","Upington","Springbok","De Aar","Kuruman"]
-}
-
-@app.route('/manifest.json')
-def manifest():
-    return send_from_directory('static', 'manifest.json')
-
-@app.route('/', methods=['GET','POST'])
-def login():
-    if request.method=='POST':
-        session['first_name']=request.form['first_name']
-        session['surname']=request.form['surname']
-        session['email']=request.form['email']
-        return redirect(url_for('confirm_login'))
-    return render_template('login.html')
-
-@app.route('/confirm-login', methods=['GET','POST'])
-def confirm_login():
-    if request.method=='POST':
-        return redirect(url_for('duration'))
-    return render_template('confirm_login.html',
-        first_name=session.get('first_name'),
-        surname=session.get('surname'),
-        email=session.get('email')
-    )
-
-@app.route('/duration', methods=['GET','POST'])
-def duration():
-    if request.method=='POST':
-        return redirect(url_for('select_course'))
-    return render_template('duration.html')
-
-@app.route('/select-course', methods=['GET','POST'])
-def select_course():
-    if request.method=='POST':
-        session['course']=request.form['course']
-        return redirect(url_for('select_province'))
-    return render_template('select.html', course_industries=course_sectors)
-
-@app.route('/select-province', methods=['GET','POST'])
-def select_province():
-    if request.method=='POST':
-        session['province']=request.form['province']
-        return redirect(url_for('locations'))
-    return render_template('select_province.html', provinces=province_towns.keys())
-
-@app.route('/locations')
-def locations():
-    course = session.get('course')
-    province = session.get('province')
-    rows = [(town, course_sectors.get(course, [])) for town in province_towns.get(province, [])]
-    return render_template('locations.html', course=course, province=province, rows=rows)
-
-Login.html
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Login</title>
-  <link rel="manifest" href="{{ url_for('manifest') }}">
-  <link rel="icon" href="{{ url_for('static', filename='icon-192.png') }}">
-  <meta name="theme-color" content="#000000">
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/static/service-worker.js');
-    }
-  </script>
-</head>
-<body>
-  <h1>WELCOME TO INTERN ME APP</h1>
-  <form method="POST">
-    <label>First Name:</label><br><input name="first_name" required><br><br>
-    <label>Surname:</label><br><input name="surname" required><br><br>
-    <label>Email:</label><br><input type="email" name="email" required><br><br>
-    <button type="submit">Next</button>
-  </form>
-</body>
-</html>
-
-confirm_login.html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Confirm Details</title>
-  <link rel="manifest" href="{{ url_for('manifest') }}">
-  <link rel="icon" href="{{ url_for('static', filename='icon-192.png') }}">
-  <meta name="theme-color" content="#000000">
-  <script> if('serviceWorker' in navigator) navigator.serviceWorker.register('/static/service-worker.js'); </script>
+  <title>Confirm Your Details</title>
 </head>
 <body>
   <h2>Confirm Your Details</h2>
-  <p>First Name: {{ first_name }}</p>
-  <p>Surname: {{ surname }}</p>
-  <p>Email: {{ email }}</p>
-  <form method="POST">
-    <input type="checkbox" name="agree" required>
-    <label>Do you accept that your information is safe with INTERN ME APP?</label><br><br>
+  <p>First Name: <span id="fname"></span></p>
+  <p>Surname: <span id="sname"></span></p>
+  <p>Email: <span id="email"></span></p>
+
+  <form onsubmit="goNext(event)">
+    <input type="checkbox" required> I accept that my information is safe with INTERN ME APP<br><br>
     <button type="submit">Next</button>
   </form>
-  <form action="/" method="get"><button>Back</button></form>
-</body>
-</html>
+  <button onclick="window.location.href='index.html'">Back</button>
 
+  <script>
+    document.getElementById('fname').innerText = localStorage.getItem("first_name");
+    document.getElementById('sname').innerText = localStorage.getItem("surname");
+    document.getElementById('email').innerText = localStorage.getItem("email");
 
-duration.html
-<!DOCTYPE html><html><body>
-  <h2>Duration Depends On Contract Given</h2>
-  <form method="POST">
-    <button formaction="/confirm-login" type="submit">Back</button>
-    <button type="submit">Next</button>
-  </form>
-</body></html>
-EOF
-
-
-select.html_course 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Select Course</title>
-</head>
-<body>
-  <h2>Select Your Course</h2>
-  <form method="POST">
-    <select name="course" required>
-      <option value="" disabled selected>Select a course</option>
-      {% for course in course_industries %}
-        <option value="{{ course }}">{{ course }}</option>
-      {% endfor %}
-    </select><br><br>
-    <button type="submit">Next</button>
-  </form>
-  <form action="/duration" method="get">
-    <button>Back</button>
-  </form>
-</body>
-</html>
-
-select_province.html,
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Select Province</title>
-</head>
-<body>
-  <h2>Select Province</h2>
-
-  <form method="POST">
-    <select name="province" required>
-      <option value="" disabled selected>Select a province</option>
-      {% for province in provinces %}
-        <option value="{{ province }}">{{ province }}</option>
-      {% endfor %}
-    </select><br><br>
-
-    <!-- ✅ Next button -->
-    <button type="submit">Next</button>
-  </form>
-
-  <!-- ✅ Back button -->
-  <form action="/select-course" method="get">
-    <button>Back</button>
-  </form>
-</body>
-</html>
-
-locations.html
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Internship Locations</title>
-</head>
-<body>
-  <h1>Internship Locations for {{ course }}</h1>
-  <h2>{{ province }}</h2>
-
-  {% for town, sectors in rows %}
-    <h3>{{ town }}</h3>
-    <ul>
-      {% for sector in sectors %}
-        <li>
-          <a target="_blank" href="https://www.google.com/maps/search/{{ sector | urlencode }} in {{ town }}, {{ province }}">
-            {{ sector }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-    <hr>
-  {% endfor %}
-
-  <form action="/select-province" method="get">
-    <button>Back</button>
-  </form>
+    function goNext(e) {
+      e.preventDefault();
+      window.location.href = "duration.html";
+    }
+  </script>
 </body>
 </html>
