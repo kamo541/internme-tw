@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Confirm Your Details</title>
+</head>
+<body>
+  <h2>Confirm Your Details</h2>
+  <p>First Name: <span id="fname"></span></p>
+  <p>Surname: <span id="sname"></span></p>
+  <p>Email: <span id="email"></span></p>
+
+  <form onsubmit="goNext(event)">
+    <input type="checkbox" required> I accept that my information is safe with INTERN ME APP<br><br>
+    <button type="submit">Next</button>
+  </form>
+  <button onclick="window.location.href='index.html'">Back</button>
+
+  <script>
+    document.getElementById('fname').innerText = localStorage.getItem("first_name");
+    document.getElementById('sname').innerText = localStorage.getItem("surname");
+    document.getElementById('email').innerText = localStorage.getItem("email");
+
+    function goNext(e) {
+      e.preventDefault();
+      window.location.href = "duration.html";
+    }
+  </script>
+</body>
+</html>
