@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>InternMe Duration</title></head>
+<head>
+  <meta charset="utf-8">
+  <title>InternMe Duration</title>
+</head>
 <body>
-  <h2>Internship Duration Depends On Contract</h2>
+  <h2>DURATION DEPENDS ON CONTRACT GIVEN</h2>
 
   <form method="post" action="/duration">
-    <label for="duration">Select Duration:</label>
-    <select name="duration" id="duration" required>
-      <option value="3 months">3 months</option>
-      <option value="6 months">6 months</option>
-      <option value="12 months">12 months</option>
-    </select>
-    <br><br>
     <button type="submit">Next</button>
   </form>
 
