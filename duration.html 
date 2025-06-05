@@ -1,19 +1,20 @@
-
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>InternMe Duration</title></head>
 <body>
   <h2>Internship Duration Depends On Contract</h2>
-  <form onsubmit="goNext(event)">
+
+  <form method="post" action="/duration">
+    <label for="duration">Select Duration:</label>
+    <select name="duration" id="duration" required>
+      <option value="3 months">3 months</option>
+      <option value="6 months">6 months</option>
+      <option value="12 months">12 months</option>
+    </select>
+    <br><br>
     <button type="submit">Next</button>
   </form>
-  <button onclick="window.location.href='confirm.html'">Back</button>
 
-  <script>
-    function goNext(e) {
-      e.preventDefault();
-      window.location.href = "select-course.html";
-    }
-  </script>
+  <button onclick="window.location.href='/confirm'">Back</button>
 </body>
 </html>
