@@ -1,62 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>InternMe - Select Course</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f9f9f9;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    select, button {
-      font-size: 16px;
-      padding: 10px;
-      margin: 10px;
-      width: 60%;
-      max-width: 300px;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
-</head>
+<html>
+<head><meta charset="utf-8"><title>Select Course</title></head>
 <body>
-
   <h2>Select Your Course</h2>
-
   <form onsubmit="saveCourse(event)">
     <select id="course" required>
-      <option value="">-- Choose a course --</option>
-    </select><br>
+      <option value="">Select a course</option>
+    </select><br><br>
     <button type="submit">Next</button>
   </form>
+  <button onclick="window.location.href='duration.html'">Back</button>
 
-  <button onclick="goBack()">Back</button>
-
-  <!-- Load data.js which contains courseSectors -->
   <script src="data.js"></script>
-
   <script>
     const courseSelect = document.getElementById("course");
-
-    // Load courses from data.js
     Object.keys(courseSectors).forEach(course => {
       const opt = document.createElement("option");
       opt.value = course;
@@ -64,17 +21,11 @@
       courseSelect.appendChild(opt);
     });
 
-    // Save course and go to next page
     function saveCourse(e) {
       e.preventDefault();
       localStorage.setItem("course", courseSelect.value);
       window.location.href = "select-province.html";
     }
-
-    function goBack() {
-      window.location.href = "duration.html";
-    }
   </script>
-
 </body>
 </html>
