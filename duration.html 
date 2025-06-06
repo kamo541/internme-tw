@@ -1,57 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>InternMe - Internship Duration</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f4f4f4;
-    }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 30px;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
-</head>
+<html>
+<head><meta charset="utf-8"><title>InternMe Duration</title></head>
 <body>
-
-  <h2>Internship Duration Depends on the Contract</h2>
-
+  <h2>Duration Depends On Contract Given</h2>
   <form onsubmit="goNext(event)">
     <button type="submit">Next</button>
   </form>
-
-  <button onclick="goBack()">Back</button>
+  <button onclick="window.location.href='confirm.html'">Back</button>
 
   <script>
     function goNext(e) {
       e.preventDefault();
       window.location.href = "select-course.html";
     }
-
-    function goBack() {
-      window.location.href = "confirm.html";
-    }
   </script>
-
 </body>
 </html>
