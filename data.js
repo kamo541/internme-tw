@@ -1,4 +1,4 @@
-# Full Course → Work Sectors (including tertiary for Education)
+const courseSectors = # Full Course → Work Sectors (including tertiary for Education)
 course_sectors = {
     "African Languages": ["Translation", "Cultural Heritage", "Linguistics"],
     "English": ["Literary Studies", "Creative Writing", "Publishing"],
