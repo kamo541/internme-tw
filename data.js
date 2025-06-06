@@ -1,65 +1,46 @@
-const courseSectors = # Full Course → Work Sectors (including tertiary for Education)
-course_sectors = {
-    "African Languages": ["Translation", "Cultural Heritage", "Linguistics"],
-    "English": ["Literary Studies", "Creative Writing", "Publishing"],
-    "Afrikaans": ["Translation", "Language Studies", "Education"],
-    ...
-    "Human Settlements Management": ["Housing Development", "Urban Development", "Public Administration"]
-}
-
-province_towns = {
-    "Gauteng": ["Johannesburg","Pretoria","Soweto","Benoni","Boksburg","Vereeniging","Krugersdorp","Centurion","Midrand"],
-    "Western Cape": ["Cape Town","Stellenbosch","Paarl","George","Knysna","Mossel Bay","Worcester"],
-    ...
-    "Northern Cape": ["Kimberley","Upington","Springbok","De Aar","Kuruman"]
-}
-
-@app.route('/manifest.json')
-def manifest():
-    return send_from_directory('static', 'manifest.json')
-
-@app.route('/', methods=['GET','POST'])
-def login():
-    if request.method=='POST':
-        session['first_name']=request.form['first_name']
-        session['surname']=request.form['surname']
-        session['email']=request.form['email']
-        return redirect(url_for('confirm_login'))
-    return render_template('login.html')
-
-@app.route('/confirm-login', methods=['GET','POST'])
-def confirm_login():
-    if request.method=='POST':
-        return redirect(url_for('duration'))
-    return render_template('confirm_login.html',
-        first_name=session.get('first_name'),
-        surname=session.get('surname'),
-        email=session.get('email')
-    )
-
-@app.route('/duration', methods=['GET','POST'])
-def duration():
-    if request.method=='POST':
-        return redirect(url_for('select_course'))
-    return render_template('duration.html')
-
-@app.route('/select-course', methods=['GET','POST'])
-def select_course():
-    if request.method=='POST':
-        session['course']=request.form['course']
-        return redirect(url_for('select_province'))
-    return render_template('select.html', course_industries=course_sectors)
-
-@app.route('/select-province', methods=['GET','POST'])
-def select_province():
-    if request.method=='POST':
-        session['province']=request.form['province']
-        return redirect(url_for('locations'))
-    return render_template('select_province.html', provinces=province_towns.keys())
-
-@app.route('/locations')
-def locations():
-    course = session.get('course')
-    province = session.get('province')
-    rows = [(town, course_sectors.get(course, [])) for town in province_towns.get(province, [])]
-    return render_template('locations.html', course=course, province=province, rows=rows)
+const internshipData = {
+  "Gauteng": {
+    "Johannesburg": {
+      "African Languages": [
+        "https://www.google.com/maps/search/Translation+in+Johannesburg,+Gauteng",
+        "https://www.google.com/maps/search/Cultural+Heritage+in+Johannesburg,+Gauteng",
+        "https://www.google.com/maps/search/Linguistics+in+Johannesburg,+Gauteng"
+      ],
+      "English": [
+        "https://www.google.com/maps/search/Literary+Studies+in+Johannesburg,+Gauteng",
+        "https://www.google.com/maps/search/Creative+Writing+in+Johannesburg,+Gauteng",
+        "https://www.google.com/maps/search/Publishing+in+Johannesburg,+Gauteng"
+      ]
+    },
+    "Pretoria": {
+      "African Languages": [
+        "https://www.google.com/maps/search/Translation+in+Pretoria,+Gauteng",
+        "https://www.google.com/maps/search/Cultural+Heritage+in+Pretoria,+Gauteng",
+        "https://www.google.com/maps/search/Linguistics+in+Pretoria,+Gauteng"
+      ]
+    }
+  },
+  "Western Cape": {
+    "Cape Town": {
+      "Afrikaans": [
+        "https://www.google.com/maps/search/Translation+in+Cape+Town,+Western+Cape",
+        "https://www.google.com/maps/search/Language+Studies+in+Cape+Town,+Western+Cape",
+        "https://www.google.com/maps/search/Education+in+Cape+Town,+Western+Cape"
+      ],
+      "English": [
+        "https://www.google.com/maps/search/Literary+Studies+in+Cape+Town,+Western+Cape",
+        "https://www.google.com/maps/search/Creative+Writing+in+Cape+Town,+Western+Cape",
+        "https://www.google.com/maps/search/Publishing+in+Cape+Town,+Western+Cape"
+      ]
+    }
+  },
+  "Northern Cape": {
+    "Kimberley": {
+      "Human Settlements Management": [
+        "https://www.google.com/maps/search/Housing+Development+in+Kimberley,+Northern+Cape",
+        "https://www.google.com/maps/search/Urban+Development+in+Kimberley,+Northern+Cape",
+        "https://www.google.com/maps/search/Public+Administration+in+Kimberley,+Northern+Cape"
+      ]
+    }
+  }
+};
