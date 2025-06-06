@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Select Course</title></head>
+<body>
+  <h2>Select Your Course</h2>
+  <form onsubmit="saveCourse(event)">
+    <select id="course" required>
+      <option value="">Select a course</option>
+    </select><br><br>
+    <button type="submit">Next</button>
+  </form>
+  <button onclick="window.location.href='duration.html'">Back</button>
+
+  <script src="data.js"></script>
+  <script>
+    const courseSelect = document.getElementById("course");
+    Object.keys(courseSectors).forEach(course => {
+      const opt = document.createElement("option");
+      opt.value = course;
+      opt.innerText = course;
+      courseSelect.appendChild(opt);
+    });
+
+    function saveCourse(e) {
+      e.preventDefault();
+      localStorage.setItem("course", courseSelect.value);
+      window.location.href = "select-province.html";
+    }
+  </script>
+</body>
+</html>
