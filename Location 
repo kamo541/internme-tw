@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Internship Locations</title></head>
+<body>
+  <h2 id="header"></h2>
+  <div id="results"></div>
+  <button onclick="window.location.href='select-province.html'">Back</button>
+
+  <script src="data.js"></script>
+  <script>
+    const course = localStorage.getItem("course");
+    const province = localStorage.getItem("province");
+    const header = document.getElementById("header");
+    const results = document.getElementById("results");
+    header.innerText = `Internship Locations for ${course} in ${province}`;
+
+    provinceTowns[province].forEach(town => {
+      const div = document.createElement("div");
+      div.innerHTML = `<h3>${town}</h3><ul>` +
+        courseSectors[course].map(
+          sector => `<li><a target="_blank" href="https://www.google.com/maps/search/${encodeURIComponent(sector)} in ${town}, ${province}">${sector}</a></li>`
+        ).join("") + "</ul><hr>";
+      results.appendChild(div);
+    });
+  </script>
+</body>
+</html>
