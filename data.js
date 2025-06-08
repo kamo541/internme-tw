@@ -2,3 +2,4 @@ export const courseIndustries = { "African Languages": ["Translation", "Cultural
 
 export const provinceTowns = { "Gauteng": ["Johannesburg","Pretoria","Soweto","Benoni","Boksburg","Vereeniging","Krugersdorp","Centurion","Midrand"], "Western Cape": ["Cape Town","Stellenbosch","Paarl","George","Knysna","Mossel Bay","Worcester"], "KwaZulu-Natal": ["Durban","Pietermaritzburg","Richards Bay","Newcastle","Ulundi","Port Shepstone"], "Eastern Cape": ["Port Elizabeth","East London","Mthatha","Queenstown","Grahamstown","Aliwal North"], "Free State": ["Bloemfontein","Welkom","Sasolburg","Bethlehem","Parys"], "Limpopo": ["Polokwane","Thohoyandou","Tzaneen","Musina","Lephalale","Mokopane"], "Mpumalanga": ["Nelspruit","Witbank","Secunda","Barberton","Standerton"], "North West": ["Mahikeng","Klerksdorp","Rustenburg","Brits","Potchefstroom"], "Northern Cape": ["Kimberley","Upington","Springbok","De Aar","Kuruman"] };
 
+
