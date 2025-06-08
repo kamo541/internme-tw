@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Select Province</title></head>
+<body>
+  <h2>Select Province</h2>
+  <form onsubmit="saveProvince(event)">
+    <select id="province" required>
+      <option value="">Select a province</option>
+    </select><br><br>
+    <button type="submit">Next</button>
+  </form>
+  <button onclick="window.location.href='select-course.html'">Back</button>
+
+  <script src="data.js"></script>
+  <script>
+    const provinceSelect = document.getElementById("province");
+    Object.keys(provinceTowns).forEach(prov => {
+      const opt = document.createElement("option");
+      opt.value = prov;
+      opt.innerText = prov;
+      provinceSelect.appendChild(opt);
+    });
+
+    function saveProvince(e) {
+      e.preventDefault();
+      localStorage.setItem("province", provinceSelect.value);
+      window.location.href = "locations.html";
+    }
+  </script>
+</body>
+</html>
