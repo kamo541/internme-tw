@@ -5,3 +5,10 @@ This code is proprietary and confidential. It may not be copied, modified, distr
 Uploading, sharing, or creating derivative works from this project is strictly prohibited unless authorized in writing by the original author.
 
 Contact: kamokerabetswe@gmail.com 
+
+## License
+
+All rights reserved. This project is proprietary and confidential.  
+No part of this repository may be copied, modified, distributed, or used without the express written permission of the author.
+
+© 2025 Kamo Kerabetswe
