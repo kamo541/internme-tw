@@ -6,9 +6,3 @@ Uploading, sharing, or creating derivative works from this project is strictly p
 
 Contact: kamokerabetswe@gmail.com 
 
-## License
-
-All rights reserved. This project is proprietary and confidential.  
-No part of this repository may be copied, modified, distributed, or used without the express written permission of the author.
-
-© 2025 Kamo Kerabetswe
